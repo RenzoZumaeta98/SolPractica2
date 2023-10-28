@@ -1,0 +1,174 @@
+﻿@model AlumnoViewModel
+@{
+    ViewData["Title"] = "AddAlumno";
+}
+
+<div class="col-12 offset-3">
+   
+    <h3>INFORMACION GENERAL</h3>
+
+
+    <div class="row mt-3">
+        <div class="col-md-5">
+            <form id="CreateForm" method="post" asp-action="AddSaveAction" style="width:100%">
+
+             
+
+                <div class="row">
+                    <div class="col-md-12">
+                       <label asp-for="DNI"></label>
+                       <input type="text" asp-for="DNI" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <label asp-for="Nombre"></label>
+                        <input type="text" asp-for="Nombre" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <label asp-for="Apellidos"></label>
+                        <input type="text" asp-for="Apellidos" class="form-control" />
+                    </div>
+                </div>
+                <div class="row pb-4">
+                   <div class="col-md-12">
+                       <label asp-for="FechaNacimiento"></label>
+                       <input type="text" asp-for="FechaNacimiento" class="form-control" />
+                   </div>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-5">
+
+            <div class="row">
+                <div class="col-12">
+                    <h3>NOTAS </h3>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                    <div class="col-md-12 ">
+                        <div class="row">
+                            <div class="col-md-12">
+                                    <label>Curso</label>
+                                    <select name="curso" id="optCurso">
+                                        <option value="" disabled selected>Seleccione un curso...</option>
+                                        <option value="Mate">Mate</option>
+                                        <option value="Lenguaje">Lenguaje</option>
+                                        <option value="Historia">Historia</option>
+                                        <option value="Ingles">Ingles</option>
+                                        <option value="Economia">Economia</option>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-6">
+                                <label>Nota</label>
+                                <input class="form-control" id="txtNota" type="text"/>
+                            </div>
+                            <div class="col-6 pt-4">
+                                
+                                <button id="btnAnadir" class="btn btn-primary">Grabar</button>
+                                
+                        </div>
+                        </div>
+                    </div> 
+            </div>
+        </div>
+    </div>
+                        <div class="row mt-5">
+                        
+                            <div class="col-md-5">
+
+
+                                <table id="tblNotas" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Curso</th>
+                                            <th>Nota</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.TemporalNotas)
+                                        {
+                                            <tr>
+                                                <td>@item.name</td>
+                                                <td>@item.nota</td> 
+                                            </tr>
+                                        }
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+
+
+
+                <div class="row mt-3">
+
+                   <div class="col-12">
+                    <button type="submit" form="CreateForm" class="btn btn-primary" style="width:420px">
+                          Grabar
+                       </button> 
+                   </div>
+                   <div class="col-12">
+                        <a class="btn btn-secondary mt-2" style="width:420px" asp-area="" asp-controller="AlumnosNotas" asp-action="Listar">
+                         Cancelar
+                      </a>
+                   </div>
+
+
+                </div>
+
+    
+</div>
+    
+    
+
+
+@section scripts {
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#btnAnadir").click(()=> { addTemporalNota(); })
+        });
+
+        const addTemporalNota = () => {
+            const cursot = $("#optCurso").val();
+            const notat = $("#txtNota").val();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("AddTemporalNota","AlumnosNotas")',
+                data: {
+                    "name": cursot,
+                    "nota": notat
+                },
+                success: () => {
+                    
+                    $("#txtCurso").val("");
+                    $("#txtNota").val("");
+                    window.location.href = window.location.href;
+                  
+                },
+                error: (ex, det) => {
+                    console.log("ERROR =>", ex, det);
+                }
+            });
+        }
+
+
+    </script>
+
+    }
+
+

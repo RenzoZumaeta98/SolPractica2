@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\SolPractica2.props" />
+</Project>

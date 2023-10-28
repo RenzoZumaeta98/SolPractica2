@@ -1,0 +1,61 @@
+﻿@model AlumnosNotasListViewModel;
+@{
+    ViewData["Title"] = "Listar";
+}
+<div>
+    <center>
+        <h1 class="text-secondary">Mantenimiento de Alumnos</h1>
+    </center>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-3">
+        <center>
+        <img style="width: 130px; height:130px;" src=" ../imagenes/ciberteclogo.jpg" />
+        </center>
+    </div>
+    <div class="col-md-9">
+
+
+        <table id="tbl" class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>DNI</th>
+                    <th>Fecha Nacimiento</th>
+                    <th>Notas</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.List)
+                {
+                    <tr>
+                        <td>@item.cod</td>
+                        <td>@item.name</td>
+                        <td>@item.apellido</td>
+                        <td>@item.dni</td>
+                        <td>@item.fechaNacimiento</td>
+                        <td>@item.notas</td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            new DataTable('#tbl');  //
+        });
+    </script>
+
+
+}
+
+
